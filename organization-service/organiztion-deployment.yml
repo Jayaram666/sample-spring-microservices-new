@@ -1,34 +1,37 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: organization
   labels:
-    app: organization
+    run: organization
+  name: organization
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: organization
+      run: organization
   template:
     metadata:
       labels:
-        app: organization
+        run: organization
     spec:
+      serviceAccountName: chaos
       containers:
-      - name: organization
-        image: sprk8.azure.io/organization
-        ports:
-        - containerPort: 8080
+        - image: jayaram269/organization
+          name: organization
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+
 ---
+
+# APP SERVICE
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: organization
   labels:
-    app: organization
+    run: organization
+  name: organization
 spec:
   ports:
-  - port: 8080
-    protocol: TCP
-  selector:
-    app: organization
+    - port: 8080

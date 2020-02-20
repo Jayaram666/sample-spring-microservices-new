@@ -1,35 +1,37 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: gateway
   labels:
-    app: gateway
+    run: gateway
+  name: gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gateway
+      run: gateway
   template:
     metadata:
       labels:
-        app: gateway
+        run: gateway
     spec:
+      serviceAccountName: chaos
       containers:
-      - name: gateway
-        image: sprk8.azure.io/gateway
-        ports:
-        - containerPort: 8080
+        - image: jayaram269/gateway
+          name: organization
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+
 ---
+
+# APP SERVICE
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway
   labels:
-    app: gateway
+    run: gateway
+  name: gateway
 spec:
   ports:
-  - port: 8080
-    protocol: TCP
-  selector:
-    app: gateway
-  type: NodePort
+    - port: 8080

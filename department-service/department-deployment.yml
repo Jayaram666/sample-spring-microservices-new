@@ -1,34 +1,37 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: department
   labels:
-    app: department
+    run: department
+  name: department
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: department
+      run: department
   template:
     metadata:
       labels:
-        app: department
+        run: department
     spec:
+      serviceAccountName: chaos
       containers:
-      - name: department
-        image: sprk8.azure.io/department
-        ports:
-        - containerPort: 8080
+        - image: jayaram269/department
+          name: department
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+
 ---
+
+# APP SERVICE
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: department
   labels:
-    app: department
+    run: department
+  name: department
 spec:
   ports:
-  - port: 8080
-    protocol: TCP
-  selector:
-    app: department
+    - port: 8080

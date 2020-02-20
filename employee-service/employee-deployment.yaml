@@ -1,34 +1,37 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: employee
   labels:
-    app: employee
+    run: employee
+  name: employee
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: employee
+      run: employee
   template:
     metadata:
       labels:
-        app: employee
+        run: employee
     spec:
+      serviceAccountName: chaos
       containers:
-      - name: employee
-        image: sprk8.azure.io/employee
-        ports:
-        - containerPort: 8080
+        - image: jayaram269/employee
+          name: employee
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+
 ---
+
+# APP SERVICE
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: employee
   labels:
-    app: employee
+    run: employee
+  name: employee
 spec:
   ports:
-  - port: 8080
-    protocol: TCP
-  selector:
-    app: employee
+    - port: 8080
