@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: employee
-        image: smartpraacr.azure.io/employee
+        image: sprk8.azure.io/employee
         ports:
         - containerPort: 8080
 ---

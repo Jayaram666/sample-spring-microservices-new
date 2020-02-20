@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: organization
-        image: smartpraacr.azure.io/organization:1.0
+        image: sprk8.azure.io/organization
         ports:
         - containerPort: 8080
 ---

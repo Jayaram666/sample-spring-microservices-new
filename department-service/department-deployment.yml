@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: department
-        image: smartpraacr.azure.io/department
+        image: sprk8.azure.io/department
         ports:
         - containerPort: 8080
 ---
